@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Contacts Demo</string>
+    <string name="loading_please_wait">Loading...please wait...</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="have_account">Have Account?</string>
+</resources>
