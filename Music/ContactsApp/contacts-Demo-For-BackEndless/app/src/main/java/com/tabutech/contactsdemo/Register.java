@@ -68,13 +68,13 @@ public class Register extends AppCompatActivity {
                     user.setProperty("Phone",phone);
 
                     showProgress(true);
+                    tvLoad.setText("Busy Registering User!!!.....Please wait...");
                     Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
                         @Override
                         public void handleResponse(BackendlessUser response) {
                             Toast.makeText(Register.this, "User successfully registered.", Toast.LENGTH_SHORT).show();
                             Register.this.finish();
                         }
-
                         @Override
                         public void handleFault(BackendlessFault fault) {
 
