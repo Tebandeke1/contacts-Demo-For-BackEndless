@@ -62,6 +62,8 @@ public class Login extends AppCompatActivity {
                 Backendless.UserService.login(email, pass, new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser response) {
+
+                        ApplicationClass.user = response;
                         Toast.makeText(Login.this, "Welcome!!!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this,MainActivity.class));
                         Login.this.finish();
@@ -107,38 +109,47 @@ public class Login extends AppCompatActivity {
         });
 
 
+        tvLoad.setText("Checking login credentials...please wait...");
         Backendless.UserService.isValidLogin(new AsyncCallback<Boolean>() {
             @Override
             public void handleResponse(Boolean response) {
-                if (response){
 
-                    String identityKey = UserIdStorageFactory.instance().getStorage().get();
+                if (response)
+                {
+                    String userObjectId = UserIdStorageFactory.instance().getStorage().get();
 
-                    showProgress(true);
-                    tvLoad.setText("Busy Logging in  User!!!.....Please wait....");
-                    Backendless.Data.of(BackendlessUser.class).findById(identityKey, new AsyncCallback<BackendlessUser>() {
+                    tvLoad.setText("Logging you in...please wait...");
+                    Backendless.Data.of(BackendlessUser.class).findById(userObjectId, new AsyncCallback<BackendlessUser>() {
                         @Override
                         public void handleResponse(BackendlessUser response) {
-                            startActivity(new Intent(Login.this,MainActivity.class));
+
+                            ApplicationClass.user = response;
+                            startActivity(new Intent(Login.this, MainActivity.class));
                             Login.this.finish();
+
                         }
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
 
-                            Toast.makeText(Login.this, "Error: "+fault.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(Login.this, "Error:1 " + fault.toString(), Toast.LENGTH_LONG).show();
                             showProgress(false);
+
                         }
                     });
-                }else {
+                }
+                else
+                {
                     showProgress(false);
                 }
+
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
 
-                Toast.makeText(Login.this, "Error: "+fault.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Error: " + fault.getMessage(), Toast.LENGTH_SHORT).show();
                 showProgress(false);
             }
         });
